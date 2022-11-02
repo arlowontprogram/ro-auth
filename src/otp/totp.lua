@@ -10,6 +10,7 @@ local TOTP = {
 	}
 }
 
+-- custom dependancy handler
 local require = function(dep_name: string)
 	local found_dep = script:FindFirstAncestor('SecuritySuite').dependancies:FindFirstChild(dep_name)
 	assert(found_dep, string.format('no dependancy of name %s found', dep_name))
@@ -18,7 +19,7 @@ end
 
 -- dependancies
 local luaOTP = require('luaOTP').get
-local qrcode = require('QRCode')
+local qrcode = require('qrcode')
 
 local luaotp = luaOTP('otp')
 local luaOTP_util = luaOTP('util')
