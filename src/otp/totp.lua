@@ -25,7 +25,7 @@ local luaOTP_util = luaOTP('util')
 local htop = luaOTP('hotp')
 
 -- generate an OTP instance from a secret
-function TOTP:get_instance(secret: string)
+function TOTP:new_instance(secret: string)
 	assert((secret) or (secret:len() < 1), 'invalid secret/secret length')
 	return luaotp.new(secret)
 end
