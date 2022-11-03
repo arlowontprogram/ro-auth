@@ -21,23 +21,23 @@ TOTP:new_instance(secret: string): <OTP-instance>
 get_code:
 ```lua
 -- returns the current TOTP code from a OTP instance
-TOTP:get_code(instance): <string>
+TOTP:get_code(instance: <OTP-instance>): <string>
 ```
 
 verify:
 ```lua
 -- returns a boolean dictating if a user code is the same as the server's code
-TOTP:verify(user_code: string, instance): <boolean>
+TOTP:verify(user_code: string, instance: <OTP-instance>): <boolean>
 ```
 generate_uri:
 ```lua
--- generates a uri safe TOTP code with optional lable and issuer tags
-TOTP:generate_uri(instance, label: string | 'no label', issuer: string | 'unknown'): <string>
+-- generates a uri safe TOTP code with optional label and issuer tags
+TOTP:generate_uri(instance: <OTP-instance>, label: string | 'no label', issuer: string | 'unknown'): <string>
 ```
 generate_qr:
 ```lua
--- generates a ROBLOX-ONLY screengui-based qr-code
-TOTP:generate_qr(instance): <screengui | userdata>
+-- generates a ROBLOX-ONLY screengui-based qr-code from a uri encoded TOTP instance
+TOTP:generate_qr(instance: <OTP-instance>): <screengui | userdata>
 ```
 
 ## ***license***
