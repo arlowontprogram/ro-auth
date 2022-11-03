@@ -1,4 +1,7 @@
+export type digest_type = 'sha1'
+
 -- please point these to proper location
+local pseudorandom = Random.new(87265547828262424367)
 local basexx = require(script.Parent.basexx)
 local sha1 = require(script.Parent.sha1)
 local util = {}
@@ -37,7 +40,6 @@ util.encode_url = function(url)
 end
 
 util.build_uri = function(secret, name, initial_count, issuer_name, algorithm, digits, period)
-	print(secret, name, initial_count, issuer_name, algorithm, digits, period)
 	local label = util.encode_url(name)
 	label = issuer_name and (util.encode_url(issuer_name) .. ':' .. label) or ""
 
@@ -112,12 +114,16 @@ local otp = {
 		otp.type == otp
 			> nil
 --]]
-otp.new = function(secret, digits, digest, totp_interval)
+otp.new = function(secret: string, counter: number, digits: number, digest: digest_type, totp_interval: number)
 	local this = {}
 	this.secret = secret
 	this.digits = digits or 6
 	this.digest = digest or "sha1"
-	--this.interval = totp_interval or 30
+	if (totp_interval ~= nil) then -- totp auth
+		this.interval = tonumber(totp_interval) or 30
+	elseif (counter ~= nil) then -- hotp auth
+		this.counter = tonumber(counter) or pseudorandom:NextNumber()
+	end
 
 	return this
 end
@@ -166,6 +172,9 @@ end
 
 -- hotp
 hotp.at = function(instance, counter)
+	if (counter == nil and instance.counter ~= nil) then
+		counter = instance.counter
+	end
 	return otp.generate_otp(instance, counter)
 end
 
