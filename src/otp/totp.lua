@@ -11,7 +11,7 @@ local TOTP = {
 }
 
 local require = function(dep_name: string)
-	local found_dep = script:FindFirstAncestor('SecuritySuite').dependancies:FindFirstChild(dep_name)
+	local found_dep = script:FindFirstAncestor('ro-auth').dependancies:FindFirstChild(dep_name)
 	assert(found_dep, string.format('no dependancy of name %s found', dep_name))
 	return require(found_dep)
 end
@@ -26,7 +26,7 @@ local htop = luaOTP('hotp')
 
 -- generate an OTP instance from a secret
 function TOTP:new_instance(secret: string)
-	assert((secret) or (tostring(secret):len() < 1), 'invalid secret/secret length')
+	assert((secret) or (tostring(secret):len() < 1), 'invalid secret provided')
 	return luaotp.new(tostring(secret))
 end
 
@@ -50,7 +50,7 @@ function TOTP:generate_uri(instance, label: string | 'no label', issuer: string 
 end
 
 -- generate an OTP qr-code from a uri encoded OTP instance
-function TOTP:generate_qr(code: string)
+function TOTP:generate_qr(code: uri_encoded_string)
 	assert((code and type(code) == 'string'), 'no/invalid code provided')
 	return qrcode.creategui(code)
 end
