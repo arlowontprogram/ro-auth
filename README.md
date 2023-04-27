@@ -1,7 +1,7 @@
 # ro-auth
-ro-auth is a luau friendly (although roblox designed) approach to authentication using methods like TOTP
+ro-auth is a luau friendly approach to authentication using methods like TOTP
 
-ro-auth is still in development. *any* and *every* bug report is welcome to be reported.
+ro-auth is (no longer) in development. *any* and *every* bug report is welcome to be reported.
 
 ***you are the sole point of security. ro-auth is only as secure as way you save these keys***
 
